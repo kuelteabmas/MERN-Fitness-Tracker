@@ -1,5 +1,10 @@
-const express = require('express')
-const cors = require('cors')
+// Import
+const express = require('express') // Express web framework
+const cors = require('cors') // Cross-origin resource sharing (CORS) -> Connects Express
+const mongoose = require('mongoose') // Mongoose will connect us to the mongoDB database
+
+const exercisesRouter = require('./routes/exercises')
+const usersRouter = require('./routes/users')
 
 require('dotenv').config() // configure environment variables in .env file
 
@@ -10,6 +15,18 @@ const port = process.env.PORT || 5000 // 5000 Port
 // Middleware 
 app.use(cors()) // CORS middleware
 app.use(express.json()) // Express middleware to allow us to parse JSON
+
+// MongoDB Connection process
+const uri = process.env.ATLAS_URI // MongoDB database URI connection string form mongoDB Atlas -- ATLAS_URI will be stored in .env file
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }) // start connection to db
+const connection = mongoose.connection
+connection.once('open', () => {
+    console.log("MongoDB database connection established successfully")
+})
+
+// Routing to respective pages
+app.use('/exercises', exercisesRouter) // routes to /exercises page
+app.use('/users', usersRouter)// routes to /users page
 
 // Start the server
 app.listen(port, () => {
