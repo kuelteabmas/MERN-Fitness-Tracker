@@ -8,12 +8,14 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
-// Handles incoming HTTP POST requests 
+/*** Handles incoming HTTP POST requests ***/
+
+// Create new exercise
 router.route('/add').post((req, res) => {
     const username = req.body.username
     const description = req.body.description
     const duration = Number(req.body.duration)
-    const date = Data.parse(req.body.date)
+    const date = Date.parse(req.body.date)
 
     const newExercise = new Exercise({
         username,
@@ -26,5 +28,36 @@ router.route('/add').post((req, res) => {
     .then(() => res.json('Exercise added !'))
     .catch(err => res.status(400).json('Error = ' + err))
 })
+
+// Get exercise by ID
+router.route('/:id').get((req, res) => {
+    Exercise.findById(req.params.id)
+        .then(exercises => res.json(exercises))
+        .catch(err => res.status(400).json('Error: ' + err))
+})
+
+// Delete exercise
+router.route('/:id').delete((res, req) => {
+    Exercise.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Exercise deleted'))
+    .catch(err => res.status(400).json('Error: ' + err))
+})
+
+// Update exercise
+router.route('/update/:id').post((res, req) => {
+    Exercise.findById(req.params.id)
+    .then(exercises => {
+        exercises.username = req.body.username
+        exercises.description = req.body.description
+        exercises.duration = Number(req.body.duration)
+        exercises.date = Date.parse(req.body.date)
+
+        exercises.save()
+            .then(() => res.json('Exercise updated!'))
+            .catch(err => res.status(400).json('Error: ' + err))
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+})
+
 
 module.exports = router
