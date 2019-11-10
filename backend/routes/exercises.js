@@ -37,14 +37,14 @@ router.route('/:id').get((req, res) => {
 })
 
 // Delete exercise
-router.route('/:id').delete((res, req) => {
+router.route('/:id').delete((req, res) => {
     Exercise.findByIdAndDelete(req.params.id)
     .then(() => res.json('Exercise deleted'))
     .catch(err => res.status(400).json('Error: ' + err))
 })
 
 // Update exercise
-router.route('/update/:id').post((res, req) => {
+router.route('/update/:id').post((req, res) => {
     Exercise.findById(req.params.id)
     .then(exercises => {
         exercises.username = req.body.username
@@ -58,6 +58,5 @@ router.route('/update/:id').post((res, req) => {
     })
     .catch(err => res.status(400).json('Error: ' + err))
 })
-
 
 module.exports = router
