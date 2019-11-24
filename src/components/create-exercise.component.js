@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+import axios from 'axios'
 
 class CreateExercises extends React.Component {
     constructor(props) {
@@ -22,10 +23,15 @@ class CreateExercises extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            users: ['test user'],
-            username: 'test user',
-        })
+        axios.get('http://localhost:5000/users/')
+            .then(response => {
+                if (response.data.length > 0) {// check if there's at least one user 
+                    this.setState({
+                        users: response.data.map(user => user.username), // return username from array in mongodb
+                        username: response.data[0].username          
+                    })
+                }
+            })
     }
 
     // Set new username from dropdown
@@ -67,6 +73,10 @@ class CreateExercises extends React.Component {
         }
 
         console.log(exercise)
+
+        axios.post('http://localhost:5000/exercises/add', exercise)
+            .then(res => console.log(res.data))
+            .catch(error => console.log(error))
 
         // once exercise is submitted, go back to list of exercises
         window.location = "/" 
