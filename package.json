@@ -13,14 +13,21 @@
     "react-scripts": "^3.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
+  "author": "Muhamed Fall",
+  "license": "MIT",
   "browserslist": {
     "production": [
       ">0.2%",

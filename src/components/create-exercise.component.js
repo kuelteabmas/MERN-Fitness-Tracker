@@ -32,6 +32,7 @@ class CreateExercises extends React.Component {
                     })
                 }
             })
+            .catch(error => console.log(error))
     }
 
     // Set new username from dropdown

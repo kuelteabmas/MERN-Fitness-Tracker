@@ -2,6 +2,7 @@
 const express = require('express') // Express web framework
 const cors = require('cors') // Cross-origin resource sharing (CORS) -> Connects Express
 const mongoose = require('mongoose') // Mongoose will connect us to the mongoDB database
+const path = require('path') // Deals with paths
 
 const exercisesRouter = require('./routes/exercises')
 const usersRouter = require('./routes/users')
@@ -27,6 +28,17 @@ connection.once('open', () => {
 // Routing to respective pages
 app.use('/exercises', exercisesRouter) // routes to /exercises page
 app.use('/users', usersRouter)// routes to /users page
+
+// Serve if in production
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('client/build'))
+
+    app.get('*', (req, res) => {
+        // load index.html file client/build/index.html
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
 // Start the server
 app.listen(port, () => {
