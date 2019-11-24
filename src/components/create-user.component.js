@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios'
 
 class CreateUsers extends React.Component {
   constructor(props) {
@@ -27,6 +28,11 @@ class CreateUsers extends React.Component {
     };
 
     console.log(user);
+
+    // Send data (object: user) to backend
+    axios.post('http://localhost:5000/users/add', user)
+        .then(res => console.log(res.data))
+        .catch(error => console.log(error))
 
     // Keep the user on the user page to create other users
     this.setState({
