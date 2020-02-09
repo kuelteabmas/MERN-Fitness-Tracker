@@ -1,14 +1,20 @@
 # MERN Fitness Tracker
 > A fitness logger built with MERN stack. This app includes CRUD functionalities for exercises and users.
 
+![mernfitness image](https://user-images.githubusercontent.com/14100297/74097679-fe6c6a80-4adc-11ea-980e-9d4b432a75c5.PNG)
+
 
 ## Quick Start
 ```bash
 # Install server dependencies
 npm install
 
-# Build for production
-npm run build
+# Change directories for both backend and client and run npm start in two different terminal sessions
+cd backend && npm start
+cd client && npm start
+
+# Go to http://localhost:3000 to view site
+
 ```
 
 ## App Info
