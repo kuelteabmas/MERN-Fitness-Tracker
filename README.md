@@ -6,12 +6,10 @@
 
 ## Quick Start
 ```bash
-# Install server dependencies
-npm install
 
 # Change directories for both backend and client and run npm start in two different terminal sessions
-cd backend && npm start
-cd client && npm start
+cd MERN-Fitness-Tracker && npm install && npm start
+cd client && npm install && npm start
 
 # Go to http://localhost:3000 to view site
 
